@@ -3,24 +3,24 @@
 Ant::Ant()
 {
     direction = 0;  //up
-    color = 255;    //white
+    colour = 255;    //white
 }
 
-Ant::Ant(unsigned short int color)
+Ant::Ant(unsigned short int colour)
 {
     direction = 0;  //up
-    this->color = color;
+    this->colour = colour;
 }
 
-Ant::Ant(unsigned short int color, unsigned short int newDirection)
+Ant::Ant(unsigned short int colour, unsigned short int newDirection)
 {
     direction = newDirection;
-    this->color = color;
+    this->colour = colour;
 }
 
-unsigned short int Ant::getColor()
+unsigned short int Ant::getColour()
 {
-    return color;
+    return colour;
 }
 
 unsigned short int Ant::getDirection()

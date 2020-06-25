@@ -14,6 +14,7 @@ public:
     Ant getAnt(unsigned short int index);
     void setAnt(unsigned short int index, Ant newAnt);
     void addAnt(Ant newAnt);
+    void goNextStep();
 
 private:
     unsigned short int board[700][900];
