@@ -22,9 +22,9 @@ unsigned short int Board::get(unsigned short int y, unsigned short int x)
     return board[y][x];
 }
 
-void Board::set(unsigned short y, unsigned short x, unsigned short floorColour)
+void Board::set(unsigned short y, unsigned short x, unsigned short floorColor)
 {
-    board[y][x] = floorColour;
+    board[y][x] = floorColor;
 }
 
 QVector <Ant> Board::getAnts()
@@ -50,20 +50,20 @@ void Board::addAnt(Ant newAnt)
 void Board::goNextStep()
 {
     unsigned short int antCoun = ants.size();
-    unsigned short int floorColour;
+    unsigned short int floorColor;
     for (unsigned short int index=0;index<antCoun; index++)
     {
         // --- dynamiczna kopia mrówki ---
-        Ant * ant = new Ant(getAnt(index).getColour(),getAnt(index).getDirection());
+        Ant * ant = new Ant(getAnt(index).getColor(),getAnt(index).getDirection());
         ant ->setX(getAnt(index).getX());
         ant ->setY(getAnt(index).getY());
 
         // kolor na ktorym stoi mrowka
-        floorColour = board[ant->getY()][ant->getX()];
+        floorColor = board[ant->getY()][ant->getX()];
         //ustawiamy nowy kolor
-        board[ant->getY()][ant->getX()] = floorColour==0?ant->getColour():0;
+        board[ant->getY()][ant->getX()] = floorColor==0?ant->getColor():0;
         //przesuwamy tymczasową mrowkę na podstawie podloza na ktorym stoi
-        ant->go(floorColour);
+        ant->go(floorColor);
         //aktualizujemy mrowkę na planszy
         setAnt(index,*ant);
 

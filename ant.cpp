@@ -3,24 +3,24 @@
 Ant::Ant()
 {
     direction = 0;  //up
-    colour = 255;    //white
+    Color = 255;    //white
 }
 
-Ant::Ant(unsigned short int colour)
+Ant::Ant(unsigned short int Color)
 {
     direction = 0;  //up
-    this->colour = colour;
+    this->Color = Color;
 }
 
-Ant::Ant(unsigned short int colour, unsigned short int newDirection)
+Ant::Ant(unsigned short int Color, unsigned short int newDirection)
 {
     direction = newDirection;
-    this->colour = colour;
+    this->Color = Color;
 }
 
-unsigned short int Ant::getColour()
+unsigned short int Ant::getColor()
 {
-    return colour;
+    return Color;
 }
 
 unsigned short int Ant::getDirection()
@@ -31,6 +31,11 @@ unsigned short int Ant::getDirection()
 void Ant::setDirection(unsigned short int newDirection)
 {
     direction = newDirection;
+}
+
+void Ant::setColor(unsigned short newColor)
+{
+    Color = newColor;
 }
 
 unsigned short int Ant::getX()
@@ -55,16 +60,26 @@ void Ant::setY(unsigned short newY)
 
 void Ant::turnRight()
 {
-    direction++;
-    if (direction>3)
-        direction = 0;
+    if (direction<3)
+    {
+       direction++;
+    }
+    else
+    {
+       direction=0;
+    }
 }
 
 void Ant::turnLeft()
 {
-    direction--;
-    if (direction<0)
-        direction = 3;
+    if (direction<1)
+    {
+        direction=3;
+    }
+    else
+    {
+        direction--;
+    }
 }
 
 void Ant::go(bool floorColor)
@@ -84,24 +99,32 @@ void Ant::goForward()
 {
     switch (direction) {
         case 0 : {  //up
-            y--;
-            if (y<0)
+            if (y>0)
+                y--;
+            else
                 y=699;
+            break;
         }
         case 1 : {  //rigth
-            x++;
-            if (x>899)
+            if (x<899)
+                x++;
+            else
                 x=0;
+            break;
         }
         case 2 : {  //down
-            y++;
-            if (y>699)
+            if (y<699)
+                y++;
+            else
                 y=0;
+            break;
         }
         case 3 : {  //left
-            x--;
-            if (x<0)
+            if (x>0)
+                x--;
+            else
                 x=899;
+            break;
         }
     }
 }

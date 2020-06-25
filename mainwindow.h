@@ -26,7 +26,8 @@ private:
     Ui::MainWindow *ui;
     QImage * image;
     QPainter * paintOnImage;
-    Board board;
+    Board * board;
+    Board * oldBoard;
     QTimer timer;
     int counterStep;
 

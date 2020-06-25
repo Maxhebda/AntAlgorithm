@@ -1,6 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QImage>
+#include <QString>
+
+// QString mySprintf(format, arguments);
+// use: s = mySprintf("Its %d %s .",12,"May");
+//      s = "12 May .";
+template<typename ... Args>
+QString mySprintf(const char * format,Args ... a)
+{
+    char scream[255];
+    sprintf(scream,format,a ...);
+    return scream;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     counterStep=0;
-        connect(&timer,SIGNAL(timeout()),this,SLOT(step()));
-        timer.setInterval(10);
+    connect(&timer,SIGNAL(timeout()),this,SLOT(step()));
+    timer.setInterval(5);
     connect(ui->actionStart,SIGNAL(triggered()),this,SLOT(clickStart()));
     connect(ui->actionStop,SIGNAL(triggered()),this,SLOT(clickStop()));
 
@@ -20,16 +32,20 @@ MainWindow::MainWindow(QWidget *parent)
     paintOnImage = new QPainter;
     paintOnImage->begin(image);
 
-    board.clear();
-    board.set(20,20,255);
+    board = new Board();
+    oldBoard = new Board();
+    board->clear();
+    oldBoard->clear();
+
+    // -- add 2 ant --
     Ant ant(255);
-    ant.setX(500);
-    ant.setY(500);
-    board.addAnt(ant);
-    ant.setX(510);
-    ant.setY(500);
-    board.addAnt(ant);
-    showBoard();
+    ant.setX(460);
+    ant.setY(350);
+    board->addAnt(ant);
+    ant.setColor(150);
+    ant.setX(440);
+    ant.setY(350);
+    board->addAnt(ant);
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +53,8 @@ MainWindow::~MainWindow()
     delete ui;
     paintOnImage->end();
     delete image;
+    delete board;
+    delete oldBoard;
     delete paintOnImage;
 }
 
@@ -54,25 +72,31 @@ void MainWindow::showBoard()
     {
         for(unsigned short int x=0;x<900;x++)
         {
-            unsigned short int floorColor = board.get(y,x);
-            paintOnImage->setPen(QColor(floorColor,floorColor,floorColor));
-            paintOnImage->drawPoint(x,y);
+            if (board->get(y,x)!=oldBoard->get(y,x))
+            {
+                unsigned short int floorColor = board->get(y,x);
+                paintOnImage->setPen(QColor(floorColor,floorColor,floorColor));
+                paintOnImage->drawPoint(x,y);
+                // aktualizacja starej planszy po zmianach nowej
+                oldBoard->set(y,x,floorColor);
+            }
         }
     }
-
-    for (unsigned short int index = 0; index < board.getAnts().size(); index ++)
-    {
-        paintOnImage->setPen(QColor(0,255,0));
-        paintOnImage->drawPoint(board.getAnt(index).getX(),board.getAnt(index).getY());
-    }
+    //    // --- rysowanie mrowki ---
+    //    for (unsigned short int index = 0; index < board->getAnts().size(); index ++)
+    //    {
+    //        paintOnImage->setPen(QColor(0,255,0));
+    //        paintOnImage->drawPoint(board->getAnt(index).getX(),board->getAnt(index).getY());
+    //    }
     repaint();
 }
 
 void MainWindow::step()
 {
     counterStep++;
-    board.goNextStep();
-    ui->menuStart->setTitle(QVariant(counterStep).toString());
+    board->goNextStep();
+    ui->menuStart->setTitle(mySprintf("Start Krok=%d",counterStep));
+//    ui->menuStart->setTitle(mySprintf("(%d,%d tlo=%d kierunek=%d",board->getAnt(0).getX(),board->getAnt(0).getY(),board->get(board->getAnt(0).getX(),board->getAnt(0).getY()),board->getAnt(0).getDirection()));
     showBoard();
 }
 
