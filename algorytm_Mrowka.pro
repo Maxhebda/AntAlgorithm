@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ant.cpp \
+    board.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     ant.h \
+    board.h \
     mainwindow.h
 
 FORMS += \
