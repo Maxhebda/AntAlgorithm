@@ -30,6 +30,8 @@ private:
     Board * oldBoard;
     QTimer timer;
     int counterStep;
+    char showAcceleration;
+    const short int  SHOWaCCELERATION=100;
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -38,5 +40,6 @@ private slots:
     void step();
     void clickStart();
     void clickStop();
+    void clickReset();
 };
 #endif // MAINWINDOW_H

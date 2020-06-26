@@ -39,10 +39,25 @@
     <property name="title">
      <string>Symulacja</string>
     </property>
+    <widget class="QMenu" name="menuMr_wek_1">
+     <property name="title">
+      <string>Mrówek = 1</string>
+     </property>
+     <addaction name="actionDodaj"/>
+     <addaction name="actionUsu"/>
+    </widget>
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
+    <addaction name="actionReset"/>
+    <addaction name="menuMr_wek_1"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string> </string>
+    </property>
    </widget>
    <addaction name="menuStart"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionStart">
@@ -53,6 +68,21 @@
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionDodaj">
+   <property name="text">
+    <string>Dodaj</string>
+   </property>
+  </action>
+  <action name="actionUsu">
+   <property name="text">
+    <string>Usuń</string>
    </property>
   </action>
  </widget>

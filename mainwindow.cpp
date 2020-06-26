@@ -20,10 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     counterStep=0;
+    showAcceleration=0;
+    ui->menu->setEnabled(false);
     connect(&timer,SIGNAL(timeout()),this,SLOT(step()));
-    timer.setInterval(5);
+    timer.setInterval(1);
     connect(ui->actionStart,SIGNAL(triggered()),this,SLOT(clickStart()));
     connect(ui->actionStop,SIGNAL(triggered()),this,SLOT(clickStop()));
+    connect(ui->actionReset,SIGNAL(triggered()),this,SLOT(clickReset()));
 
     QWidget::setMinimumHeight(700+20+ui->menubar->height());
     QWidget::setMaximumHeight(700+20+ui->menubar->height());
@@ -37,13 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
     board->clear();
     oldBoard->clear();
 
-    // -- add 2 ant --
+    // -- add one ant --
     Ant ant(255);
-    ant.setX(460);
-    ant.setY(350);
-    board->addAnt(ant);
     ant.setColor(150);
-    ant.setX(440);
+    ant.setX(450);
     ant.setY(350);
     board->addAnt(ant);
 }
@@ -79,6 +79,7 @@ void MainWindow::showBoard()
                 paintOnImage->drawPoint(x,y);
                 // aktualizacja starej planszy po zmianach nowej
                 oldBoard->set(y,x,floorColor);
+
             }
         }
     }
@@ -95,9 +96,15 @@ void MainWindow::step()
 {
     counterStep++;
     board->goNextStep();
-    ui->menuStart->setTitle(mySprintf("Start Krok=%d",counterStep));
-//    ui->menuStart->setTitle(mySprintf("(%d,%d tlo=%d kierunek=%d",board->getAnt(0).getX(),board->getAnt(0).getY(),board->get(board->getAnt(0).getX(),board->getAnt(0).getY()),board->getAnt(0).getDirection()));
-    showBoard();
+    ui->menu->setTitle(mySprintf("Krok=%d",counterStep));
+
+    // --- rysuj tylko co okreslona liczbe cykli np co 20 cykli
+    showAcceleration++;
+    if (showAcceleration==SHOWaCCELERATION)
+    {
+        showAcceleration=0;
+        showBoard();
+    }
 }
 
 void MainWindow::clickStart()
@@ -108,4 +115,10 @@ void MainWindow::clickStart()
 void MainWindow::clickStop()
 {
     timer.stop();
+}
+
+void MainWindow::clickReset()
+{
+    board->clear();
+    counterStep=0;
 }
