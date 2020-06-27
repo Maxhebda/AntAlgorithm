@@ -35,6 +35,7 @@ private:
     const short int  SHOWaCCELERATION=100;
     void mySetPen(unsigned short int color);
     void myDrawPoint(unsigned short int x, unsigned short int y);
+    boolean showField;          //show field or ant
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -46,5 +47,7 @@ private slots:
     void clickReset();
     void clickDodaj();
     void clickUsun();
+    void clickShowField();
+    void clickShowAnts();
 };
 #endif // MAINWINDOW_H

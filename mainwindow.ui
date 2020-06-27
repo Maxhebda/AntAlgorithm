@@ -46,10 +46,18 @@
      <addaction name="actionDodaj"/>
      <addaction name="actionUsu"/>
     </widget>
+    <widget class="QMenu" name="menuRysowanie">
+     <property name="title">
+      <string>Rysowanie</string>
+     </property>
+     <addaction name="action_slad_mrowki_na_planszy"/>
+     <addaction name="actionPoruszanie_mr_wki"/>
+    </widget>
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
     <addaction name="actionReset"/>
     <addaction name="menuMrowek"/>
+    <addaction name="menuRysowanie"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -83,6 +91,25 @@
   <action name="actionUsu">
    <property name="text">
     <string>Usuń</string>
+   </property>
+  </action>
+  <action name="action_slad_mrowki_na_planszy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ślad mrówki na planszy</string>
+   </property>
+  </action>
+  <action name="actionPoruszanie_mr_wki">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Poruszanie mrówki</string>
    </property>
   </action>
  </widget>

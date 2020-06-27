@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     counterStep=0;
     showAcceleration=0;
+
     ui->menu->setEnabled(false);
     connect(&timer,SIGNAL(timeout()),this,SLOT(step()));
     timer.setInterval(1);
@@ -30,6 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionReset,SIGNAL(triggered()),this,SLOT(clickReset()));
     connect(ui->actionDodaj,SIGNAL(triggered()),this,SLOT(clickDodaj()));
     connect(ui->actionUsu,SIGNAL(triggered()),this,SLOT(clickUsun()));
+    connect(ui->actionPoruszanie_mr_wki,SIGNAL(triggered()),this,SLOT(clickShowAnts()));
+    connect(ui->action_slad_mrowki_na_planszy,SIGNAL(triggered()),this,SLOT(clickShowField()));
+
+    showField=true;
 
     QWidget::setMinimumHeight(700+20+ui->menubar->height());
     QWidget::setMaximumHeight(700+20+ui->menubar->height());
@@ -70,69 +75,59 @@ void MainWindow::paintEvent(QPaintEvent *)
 
 void MainWindow::mySetPen(unsigned short int Color)
 {
-                    switch (Color) {
-                        case 0 : {paintOnImage->setPen(QColor(0,0,0));break;}
-                        case 1 : {paintOnImage->setPen(QColor(0,255,255));break;}
-                        case 2 : {paintOnImage->setPen(QColor(255,0,255));break;}
-                        case 3 : {paintOnImage->setPen(QColor(255,255,0));break;}
-                        case 4 : {paintOnImage->setPen(QColor(0,0,255));break;}
-                        case 5 : {paintOnImage->setPen(QColor(0,255,0));break;}
-                        case 6 : {paintOnImage->setPen(QColor(255,0,100));break;}
-                        case 7 : {paintOnImage->setPen(QColor(120,255,120));break;}
-                        case 8 : {paintOnImage->setPen(QColor(120,120,255));break;}
-                        case 9 : {paintOnImage->setPen(QColor(255,100,100));break;}
-                        case 10 : {paintOnImage->setPen(QColor(0,100,255));break;}
-                        default: paintOnImage->setPen(QColor(255,255,255));
-                    }
+    switch (Color) {
+        case 0 : {paintOnImage->setPen(QColor(0,0,0));break;}
+        case 1 : {paintOnImage->setPen(QColor(0,255,255));break;}
+        case 2 : {paintOnImage->setPen(QColor(255,0,255));break;}
+        case 3 : {paintOnImage->setPen(QColor(255,255,0));break;}
+        case 4 : {paintOnImage->setPen(QColor(0,0,255));break;}
+        case 5 : {paintOnImage->setPen(QColor(0,255,0));break;}
+        case 6 : {paintOnImage->setPen(QColor(255,0,100));break;}
+        case 7 : {paintOnImage->setPen(QColor(120,255,120));break;}
+        case 8 : {paintOnImage->setPen(QColor(120,120,255));break;}
+        case 9 : {paintOnImage->setPen(QColor(255,100,100));break;}
+        case 10 : {paintOnImage->setPen(QColor(0,100,255));break;}
+        default: paintOnImage->setPen(QColor(255,255,255));
+    }
 }
 
 void MainWindow::myDrawPoint(unsigned short x, unsigned short y)
 {
-paintOnImage->drawPoint(x*2,y*2);
-paintOnImage->drawPoint(x*2+1,y*2);
-paintOnImage->drawPoint(x*2,y*2+1);
-paintOnImage->drawPoint(x*2+1,y*2+1);
+    paintOnImage->drawPoint(x*2,y*2);
+    paintOnImage->drawPoint(x*2+1,y*2);
+    paintOnImage->drawPoint(x*2,y*2+1);
+    paintOnImage->drawPoint(x*2+1,y*2+1);
 }
 
 void MainWindow::showBoard()
 {
-//    for (unsigned short int y=0;y<350; y++)
-//    {
-//        for(unsigned short int x=0;x<450;x++)
-//        {
-//            if (board->get(y,x)!=oldBoard->get(y,x))
-//            {
-//                unsigned short int floorColor = board->get(y,x);
-//                switch (floorColor) {
-//                    case 0 : {paintOnImage->setPen(QColor(0,0,0));break;}
-//                    case 1 : {paintOnImage->setPen(QColor(0,255,255));break;}
-//                    case 2 : {paintOnImage->setPen(QColor(255,0,255));break;}
-//                    case 3 : {paintOnImage->setPen(QColor(255,255,0));break;}
-//                    case 4 : {paintOnImage->setPen(QColor(0,0,255));break;}
-//                    case 5 : {paintOnImage->setPen(QColor(0,255,0));break;}
-//                    case 6 : {paintOnImage->setPen(QColor(255,0,100));break;}
-//                    case 7 : {paintOnImage->setPen(QColor(120,255,120));break;}
-//                    case 8 : {paintOnImage->setPen(QColor(120,120,255));break;}
-//                    case 9 : {paintOnImage->setPen(QColor(255,100,100));break;}
-//                    case 10 : {paintOnImage->setPen(QColor(0,100,255));break;}
-//                    default: paintOnImage->setPen(QColor(255,255,255));
-//                }
-//                paintOnImage->drawPoint(x*2,y*2);
-//                paintOnImage->drawPoint(x*2+1,y*2);
-//                paintOnImage->drawPoint(x*2,y*2+1);
-//                paintOnImage->drawPoint(x*2+1,y*2+1);
-//                // aktualizacja starej planszy po zmianach nowej
-//                oldBoard->set(y,x,floorColor);
-
-//            }
-//        }
-//    }
-        // --- rysowanie mrowki ---
+    if (showField)
+    {
+        // --- rysowanie tylko udeptanego pola ---
+        for (unsigned short int y=0;y<350; y++)
+        {
+            for(unsigned short int x=0;x<450;x++)
+            {
+                if (board->get(y,x)!=oldBoard->get(y,x))
+                {
+                    unsigned short int floorColor = board->get(y,x);
+                    mySetPen(floorColor);
+                    myDrawPoint(x,y);
+                    // aktualizacja starej planszy po zmianach nowej
+                    oldBoard->set(y,x,floorColor);
+                }
+            }
+        }
+    }
+    else
+    {
+        // --- rysowanie śladu mrowki ---
         for (unsigned short int index = 0; index < board->getAnts().size(); index ++)
         {
             mySetPen(board->getAnt(index).getColor());
             myDrawPoint(board->getAnt(index).getX(),board->getAnt(index).getY());
         }
+    }
     repaint();
 }
 
@@ -169,6 +164,7 @@ void MainWindow::clickReset()
 {
     board->clear();
     counterStep=0;
+    ui->menu->setTitle("");
 }
 
 void MainWindow::clickDodaj()
@@ -191,4 +187,35 @@ void MainWindow::clickUsun()
         board->deleteAnt(0);
         ui->menuMrowek->setTitle(mySprintf("Mrówek = %d",board->getAnts().size()));
     }
+}
+
+void MainWindow::clickShowField()
+{
+    if (ui->action_slad_mrowki_na_planszy->isChecked())
+    {
+        paintOnImage->fillRect(0,0,899,699,QColor(0,0,0));
+    }
+    ui->action_slad_mrowki_na_planszy->blockSignals(true);
+    ui->action_slad_mrowki_na_planszy->setChecked(true);
+    ui->action_slad_mrowki_na_planszy->blockSignals(false);
+    ui->actionPoruszanie_mr_wki->blockSignals(true);
+    ui->actionPoruszanie_mr_wki->setChecked(false);
+    ui->actionPoruszanie_mr_wki->blockSignals(false);
+    showField=true;
+    paintOnImage->fillRect(0,0,899,699,QColor(0,0,0));
+}
+
+void MainWindow::clickShowAnts()
+{
+    if (ui->actionPoruszanie_mr_wki->isChecked())
+    {
+        paintOnImage->fillRect(0,0,899,699,QColor(0,0,0));
+    }
+    ui->actionPoruszanie_mr_wki->blockSignals(true);
+    ui->actionPoruszanie_mr_wki->setChecked(true);
+    ui->actionPoruszanie_mr_wki->blockSignals(false);
+    ui->action_slad_mrowki_na_planszy->blockSignals(true);
+    ui->action_slad_mrowki_na_planszy->setChecked(false);
+    ui->action_slad_mrowki_na_planszy->blockSignals(false);
+    showField=false;
 }
