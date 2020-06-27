@@ -39,7 +39,7 @@
     <property name="title">
      <string>Symulacja</string>
     </property>
-    <widget class="QMenu" name="menuMr_wek_1">
+    <widget class="QMenu" name="menuMrowek">
      <property name="title">
       <string>Mrówek = 1</string>
      </property>
@@ -49,7 +49,7 @@
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
     <addaction name="actionReset"/>
-    <addaction name="menuMr_wek_1"/>
+    <addaction name="menuMrowek"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">

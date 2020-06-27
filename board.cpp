@@ -8,9 +8,9 @@ Board::Board()
 
 void Board::clear()
 {
-    for (unsigned short int y=0;y<700; y++)
+    for (unsigned short int y=0;y<350; y++)
     {
-        for(unsigned short int x=0;x<900;x++)
+        for(unsigned short int x=0;x<450;x++)
         {
             board[y][x] = 0;        //black
         }
@@ -45,6 +45,12 @@ void Board::setAnt(unsigned short index, Ant newAnt)
 void Board::addAnt(Ant newAnt)
 {
     ants.push_back(newAnt);
+}
+
+void Board::deleteAnt(unsigned short index)
+{
+    if (index<ants.size())
+    ants.remove(index);
 }
 
 void Board::goNextStep()

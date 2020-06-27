@@ -14,10 +14,11 @@ public:
     Ant getAnt(unsigned short int index);
     void setAnt(unsigned short int index, Ant newAnt);
     void addAnt(Ant newAnt);
+    void deleteAnt(unsigned short int index);
     void goNextStep();
 
 private:
-    unsigned short int board[700][900];
+    unsigned short int board[350][450];
     QVector <Ant> ants;
 };
 

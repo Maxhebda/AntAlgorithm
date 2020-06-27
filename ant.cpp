@@ -3,7 +3,7 @@
 Ant::Ant()
 {
     direction = 0;  //up
-    Color = 255;    //white
+    Color = 11;     //white
 }
 
 Ant::Ant(unsigned short int Color)
@@ -102,18 +102,18 @@ void Ant::goForward()
             if (y>0)
                 y--;
             else
-                y=699;
+                y=349;
             break;
         }
         case 1 : {  //rigth
-            if (x<899)
+            if (x<449)
                 x++;
             else
                 x=0;
             break;
         }
         case 2 : {  //down
-            if (y<699)
+            if (y<349)
                 y++;
             else
                 y=0;
@@ -123,7 +123,7 @@ void Ant::goForward()
             if (x>0)
                 x--;
             else
-                x=899;
+                x=449;
             break;
         }
     }

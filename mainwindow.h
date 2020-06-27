@@ -8,6 +8,7 @@
 #include <ant.h>
 #include <board.h>
 #include <QTimer>
+#include <ctime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +33,8 @@ private:
     int counterStep;
     char showAcceleration;
     const short int  SHOWaCCELERATION=100;
+    void mySetPen(unsigned short int color);
+    void myDrawPoint(unsigned short int x, unsigned short int y);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -41,5 +44,7 @@ private slots:
     void clickStart();
     void clickStop();
     void clickReset();
+    void clickDodaj();
+    void clickUsun();
 };
 #endif // MAINWINDOW_H
