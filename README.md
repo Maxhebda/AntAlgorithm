@@ -6,3 +6,6 @@ Mrówka Langtona – prosty automat komórkowy wymyślony i opisany przez Chrisa
 * porusza się na nieskończonej planszy podzielonej na kwadratowe komórki (pola) w dwóch możliwych kolorach: czarnym i białym.
 
 Link do opisu algorytmu :  [Mrówka Langtona Wikipedia](https://pl.wikipedia.org/wiki/Mr%C3%B3wka_Langtona)
+
+# Screen programu :
+![Automat komórkowy - Mrówka Langtona](./projectScreenImage/algorytm_Mrowka.png)
